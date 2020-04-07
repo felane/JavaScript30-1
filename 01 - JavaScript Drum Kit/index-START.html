@@ -59,6 +59,51 @@
 
 <script>
 
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('playing');
+  }
+
+function playSound(e) {
+    //Steg 1 console.log(e.keyCode); leta efter responding key
+    //Steg 2 gör en queryselector till den keyn och associatea den till data-keyn
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    //Steg 3 consola logga audio så man kan se i inspect om man väljer rätt key
+    //Steg 4 console.log(audio)
+    //Steg 8 skapa variabel Key så vi kan implementera animationer
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    //Steg 6 gör if sats så man inte får null på knappar som inte används
+    if (!audio) return;
+
+    //lägg till classen playing från classlist till key
+    key.classList.add('playing');
+    //Steg 7rewind till start så man kan klicka fler gånger på keyn
+    audio.currentTime = 0;
+    //Steg 5 spela upp ljud
+    audio.play();
+};
+
+  // loopa/iterera över keys array och sätt en event listener på varje
+  const keys = Array.from(document.querySelectorAll('.key'));
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSound);
+
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('playing');
+  }
+
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    if (!audio) return;
+
+    key.classList.add('playing');
+    audio.currentTime = 0;
+    audio.play();
+  }
+
+
 </script>
 
 
